@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>تم الاختراق 😂</title>
+<title>اختراق وهمي لجهاز Ehab</title>
 <style>
-body{
-background:black;
-color:red;
-font-size:40px;
-text-align:center;
-margin-top:100px;
-font-family:Arial;
+body {
+  background-color: black;
+  color: #00ff00; /* اللون الأخضر المشع */
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  margin-top: 50px;
+  font-size: 24px;
+}
+#countdown {
+  font-size: 80px;
+  margin-top: 30px;
+}
+#message {
+  display: none;
+  font-size: 35px;
+  margin-top: 30px;
+  color: red;
+}
+.line {
+  text-align: left;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 </style>
 </head>
-
 <body>
-تم اختراق جهازك 😂<br>
- 
+
+<div class="line">جاري فحص الجهاز...</div>
+<div class="line">فحص العمليات النشطة...</div>
+<div class="line">التحقق من ملفات النظام...</div>
+
+<div id="countdown">10</div>
+<div id="message">⚠ هذا الجهاز يخص Ehab 😂  ! ⚠</div>
+
+<script>
+let count = 10;
+const countdown = document.getElementById("countdown");
+const message = document.getElementById("message");
+
+const interval = setInterval(() => {
+    count--;
+    countdown.textContent = count;
+    if(count <= 0){
+        clearInterval(interval);
+        countdown.style.display = "none";
+        message.style.display = "block";
+    }
+}, 1000);
+</script>
+
 </body>
 </html>
