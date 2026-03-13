@@ -1,43 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
+<meta charset="UTF-8">
 <title>اختراق وهمي لجهاز Ehab</title>
 <style>
 body {
-  background-color: black;
-  color: #00ff00; /* اللون الأخضر المشع */
+  margin: 0;
+  padding: 0;
+  background: black;
+  overflow: hidden;
   font-family: "Courier New", Courier, monospace;
+  color: #00ff00;
+}
+#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+#content {
+  position: relative;
+  z-index: 1;
   text-align: center;
   margin-top: 50px;
-  font-size: 24px;
+  font-size: 35px;
 }
 #countdown {
-  font-size: 80px;
-  margin-top: 30px;
+  font-size: 100px;
+  margin-top: 50px;
+}
+#line {
+  margin-top: 20px;
+  font-size: 25px;
 }
 #message {
   display: none;
-  font-size: 35px;
+  font-size: 40px;
   margin-top: 30px;
   color: red;
-}
-.line {
-  text-align: left;
-  margin-left: 20%;
-  margin-right: 20%;
 }
 </style>
 </head>
 <body>
 
-<div class="line">جاري فحص الجهاز...</div>
-<div class="line">فحص العمليات النشطة...</div>
-<div class="line">التحقق من ملفات النظام...</div>
+<canvas id="matrix"></canvas>
 
-<div id="countdown">10</div>
-<div id="message">⚠ هذا الجهاز يخص Ehab 😂  ! ⚠</div>
+<div id="content">
+  <div id="line">جاري فحص جهاز Ehab...</div>
+  <div id="line">فحص العمليات النشطة...</div>
+  <div id="line">التحقق من ملفات النظام...</div>
+
+  <div id="countdown">10</div>
+  <div id="message">⚠ هذا الجهاز يخص Ehab 😂 ! ⚠</div>
+</div>
 
 <script>
+// MATRIX BACKGROUND EFFECT
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "0123456789@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const fontSize = 20;
+const columns = canvas.width / fontSize;
+const drops = [];
+
+for (let x = 0; x < columns; x++) {
+    drops[x] = Math.random() * canvas.height;
+}
+
+function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ff00";
+    ctx.font = fontSize + "px Courier New";
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i]);
+        drops[i] += fontSize;
+        if (drops[i] > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+    }
+}
+setInterval(draw, 50);
+
+// COUNTDOWN TIMER
 let count = 10;
 const countdown = document.getElementById("countdown");
 const message = document.getElementById("message");
